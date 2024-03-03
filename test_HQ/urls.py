@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from products.views import ProductListViewSet
 from products.views import LessonListViewSet
+from products.views import ProductStatisticViewSet
 from clients.views import ClientLoginView
 from clients.views import ClientLogoutView
 
@@ -27,5 +28,6 @@ urlpatterns = [
     path('login/', ClientLoginView.as_view(), name="login"),
     path('logout/', ClientLogoutView.as_view(), name="logout"),
     path('products/', ProductListViewSet.as_view({'get': 'list'}), name="list_product"),  # noqa: E501
-    path('products/<int:pk>/lessons/', LessonListViewSet.as_view({'get': 'list'}))  # noqa: E501
+    path('products/<int:pk>/lessons/', LessonListViewSet.as_view({'get': 'list'})),  # noqa: E501
+    path('products/statistics/', ProductStatisticViewSet.as_view({'get': 'list'}))  # noqa: E501
 ]

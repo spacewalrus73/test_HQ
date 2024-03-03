@@ -4,14 +4,19 @@ from products.models import Product, Lesson
 
 class ProductSerializer(serializers.ModelSerializer):
 
-    lessons_count = serializers.IntegerField()
-
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = ["creator", "name", "start_date", "cost"]
 
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
+        fields = "__all__"
+
+
+class ProductStatisticSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
         fields = "__all__"

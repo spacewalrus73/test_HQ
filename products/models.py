@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+from django.utils import timezone
 from clients.models import Client
 
 
@@ -12,13 +12,15 @@ class Product(models.Model):
     max_students = models.PositiveIntegerField()
     min_students = models.PositiveIntegerField()
     lessons_count = models.PositiveIntegerField(null=True)
+    students_count = models.PositiveIntegerField(null=True, blank=True)
+    fill_rate = models.PositiveIntegerField(null=True, blank=True)
+    purchase_rate = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}-{self.cost}-{self.creator}"
 
     def is_started(self):
-        return (self.start_date.timestamp()
-                > datetime.datetime.now().timestamp())
+        return self.start_date < timezone.now()
 
 
 class Lesson(models.Model):
@@ -39,4 +41,6 @@ class Access(models.Model):
 
     student = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    is_distributed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ["student", "product"]

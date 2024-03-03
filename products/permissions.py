@@ -8,4 +8,4 @@ class LessonAccessPermission(permissions.BasePermission):
         return Access.objects.filter(
             product=view.kwargs["pk"],
             student=request.user.pk,
-        )
+        ).exists()
